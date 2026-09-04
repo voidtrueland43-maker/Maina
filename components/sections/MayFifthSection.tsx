@@ -21,7 +21,7 @@ export const MayFifthSection = () => {
         <div className="font-editorial text-center font-bold tracking-[0.3em] text-[#421D2A] text-xs sm:text-sm">
           THE BIRTHDAY ISSUE
         </div>
-        <span className="font-semibold text-right">PAGE 07</span>
+        <span className="font-semibold text-right">PAGE 08</span>
       </motion.header>
 
       {/* ── Content: 05 MAY Special Spread ── */}
@@ -155,7 +155,7 @@ export const MayFifthSection = () => {
       >
         <span>THE BIRTHDAY ISSUE</span>
         <span className="font-editorial text-[#421D2A] font-bold tracking-[0.3em]">05 MAY DEDICATION</span>
-        <span>PAGE 07</span>
+        <span>PAGE 08</span>
       </motion.footer>
     </section>
   );

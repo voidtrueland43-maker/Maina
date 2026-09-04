@@ -15,17 +15,17 @@ export const FinalPageSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="relative z-10 flex items-center justify-between border-b border-[#6B3045]/30 pb-3 text-[10px] sm:text-xs tracking-[0.25em] uppercase text-[#6B3045] shrink-0"
+        className="relative z-10 flex items-center justify-between border-b border-[#6B3045]/30 pb-3 text-[10px] sm:text-xs tracking-[0.25em] uppercase text-[#6B3045] shrink-0 font-semibold"
       >
-        <span className="font-semibold">ISSUE 01</span>
+        <span>ISSUE 01</span>
         <div className="font-editorial text-center font-bold tracking-[0.3em] text-[#421D2A] text-xs sm:text-sm">
           THE BIRTHDAY ISSUE
         </div>
-        <span className="font-semibold text-right">PAGE 10</span>
+        <span className="text-right">PAGE 11</span>
       </motion.header>
 
       {/* ── Content: Back Cover Closing ── */}
-      <div className="relative z-10 my-auto w-full max-w-4xl mx-auto py-6 sm:py-10 px-2 sm:px-6 text-center">
+      <div className="relative z-10 my-auto w-full max-w-4xl mx-auto py-6 sm:py-10 px-2 sm:px-6 text-center flex flex-col items-center justify-center">
         
         {/* Back Cover Masthead */}
         <motion.div
@@ -50,7 +50,7 @@ export const FinalPageSection = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.85, delay: 0.2 }}
-          className="space-y-6 max-w-xl mx-auto"
+          className="space-y-6 max-w-xl mx-auto flex flex-col items-center"
         >
           <p className="font-editorial italic text-[#421D2A] text-xl sm:text-3xl leading-snug">
             "An entire edition dedicated to you, today and forever."
@@ -78,7 +78,7 @@ export const FinalPageSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="relative z-10 pt-3 border-t border-[#6B3045]/30 flex flex-row items-center justify-between text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-[#6B3045] shrink-0"
+        className="relative z-10 pt-3 border-t border-[#6B3045]/30 flex flex-row items-center justify-between text-[10px] uppercase tracking-[0.25em] text-[#6B3045] shrink-0 font-semibold"
       >
         <span>MAINA EDITIONS</span>
         <span className="font-editorial text-[#421D2A] font-bold tracking-[0.3em]">UNTIL FOREVER</span>

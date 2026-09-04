@@ -21,7 +21,7 @@ export const SeptemberFourthSection = () => {
         <div className="font-editorial text-center font-bold tracking-[0.3em] text-[#421D2A] text-xs sm:text-sm">
           THE BIRTHDAY ISSUE
         </div>
-        <span className="font-semibold text-right">PAGE 08</span>
+        <span className="font-semibold text-right">PAGE 09</span>
       </motion.header>
 
       {/* ── Content: 04 SEPTEMBER Birthday Celebration ── */}
@@ -99,7 +99,7 @@ export const SeptemberFourthSection = () => {
       >
         <span>THE BIRTHDAY ISSUE</span>
         <span className="font-editorial text-[#421D2A] font-bold tracking-[0.3em]">04 SEPTEMBER</span>
-        <span>PAGE 08</span>
+        <span>PAGE 09</span>
       </motion.footer>
     </section>
   );

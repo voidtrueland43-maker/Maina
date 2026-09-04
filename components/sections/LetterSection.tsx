@@ -31,7 +31,7 @@ export const LetterSection = () => {
         <div className="font-editorial text-center font-bold tracking-[0.3em] text-[#421D2A] text-xs sm:text-sm">
           THE BIRTHDAY ISSUE
         </div>
-        <span className="font-semibold text-right">PAGE 09</span>
+        <span className="font-semibold text-right">PAGE 10</span>
       </motion.header>
 
       {/* ── Main Content: Physical 3D Envelope & Unfolding Letter Spread ── */}

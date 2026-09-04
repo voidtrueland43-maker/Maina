@@ -54,7 +54,7 @@ export const LittleThingsSection = () => {
         <div className="font-editorial text-center font-bold tracking-[0.3em] text-[#421D2A] text-xs sm:text-sm">
           THE BIRTHDAY ISSUE
         </div>
-        <span className="font-semibold text-right">PAGE 05</span>
+        <span className="font-semibold text-right">PAGE 06</span>
       </motion.header>
 
       {/* ── Content: 6 Scrapbook Cards ── */}
@@ -128,7 +128,7 @@ export const LittleThingsSection = () => {
       >
         <span>THE BIRTHDAY ISSUE</span>
         <span className="font-editorial text-[#421D2A] font-bold tracking-[0.3em]">LITTLE THINGS</span>
-        <span>PAGE 05</span>
+        <span>PAGE 06</span>
       </motion.footer>
     </section>
   );

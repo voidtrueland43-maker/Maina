@@ -35,7 +35,7 @@ export const PhotoGallerySection = () => {
         <div className="font-editorial text-center font-bold tracking-[0.3em] text-[#421D2A] text-xs sm:text-sm">
           THE BIRTHDAY ISSUE
         </div>
-        <span className="font-semibold text-right">PAGE 06</span>
+        <span className="font-semibold text-right">PAGE 07</span>
       </motion.header>
 
       {/* ── Main Content: Continuous 35mm Movie Reel Projector ── */}
@@ -171,7 +171,7 @@ export const PhotoGallerySection = () => {
       >
         <span>THE BIRTHDAY ISSUE</span>
         <span className="font-editorial text-[#421D2A] font-bold tracking-[0.3em]">35MM FILM REEL</span>
-        <span>PAGE 06</span>
+        <span>PAGE 07</span>
       </motion.footer>
     </section>
   );

@@ -7,6 +7,7 @@ import { HeroSection } from "./sections/HeroSection";
 import { PageTwoSection } from "./sections/PageTwoSection";
 import { OurStorySection } from "./sections/OurStorySection";
 import { MemoryWallSection } from "./sections/MemoryWallSection";
+import { MusicSection } from "./sections/MusicSection";
 import { LittleThingsSection } from "./sections/LittleThingsSection";
 import { PhotoGallerySection } from "./sections/PhotoGallerySection";
 import { MayFifthSection } from "./sections/MayFifthSection";
@@ -19,12 +20,13 @@ const PAGES = [
   { id: "page-two", num: "02", component: <PageTwoSection /> },
   { id: "our-story", num: "03", component: <OurStorySection /> },
   { id: "memory-wall", num: "04", component: <MemoryWallSection /> },
-  { id: "little-things", num: "05", component: <LittleThingsSection /> },
-  { id: "gallery", num: "06", component: <PhotoGallerySection /> },
-  { id: "may-fifth", num: "07", component: <MayFifthSection /> },
-  { id: "september-fourth", num: "08", component: <SeptemberFourthSection /> },
-  { id: "letter", num: "09", component: <LetterSection /> },
-  { id: "final", num: "10", component: <FinalPageSection /> },
+  { id: "music", num: "05", component: <MusicSection /> },
+  { id: "little-things", num: "06", component: <LittleThingsSection /> },
+  { id: "gallery", num: "07", component: <PhotoGallerySection /> },
+  { id: "may-fifth", num: "08", component: <MayFifthSection /> },
+  { id: "september-fourth", num: "09", component: <SeptemberFourthSection /> },
+  { id: "letter", num: "10", component: <LetterSection /> },
+  { id: "final", num: "11", component: <FinalPageSection /> },
 ];
 
 export const MagazineFlipBook = () => {
@@ -160,93 +162,95 @@ export const MagazineFlipBook = () => {
   };
 
   return (
-    <main
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      onClick={handleViewportClick}
-      style={{ touchAction: "pan-y" }}
-      className="relative h-screen w-screen overflow-hidden bg-[#F3E8D8] text-[#211B1D] select-none perspective-[1600px]"
-    >
-      {/* ── 3D / Hardware-Accelerated Page Stack ── */}
-      <div className="relative h-full w-full preserve-3d">
-        <AnimatePresence mode="popLayout" custom={direction}>
-          <motion.div
-            key={currentPage}
-            custom={direction}
-            initial={
-              isMobile
-                ? direction === "next" ? { x: "100%", opacity: 0.9, scale: 0.98, rotateY: 0 } : { x: "-100%", opacity: 0.9, scale: 0.98, rotateY: 0 }
-                : direction === "next" ? { rotateY: 90, opacity: 0.85, x: "0%", transformOrigin: "left center" } : { rotateY: -90, opacity: 0.85, x: "0%", transformOrigin: "right center" }
-            }
-            animate={
-              isMobile
-                ? { x: "0%", opacity: 1, scale: 1, rotateY: 0 }
-                : { rotateY: 0, opacity: 1, x: "0%", scale: 1 }
-            }
-            exit={
-              isMobile
-                ? direction === "next" ? { x: "-100%", opacity: 0.9, scale: 0.98, rotateY: 0 } : { x: "100%", opacity: 0.9, scale: 0.98, rotateY: 0 }
-                : direction === "next" ? { rotateY: -90, opacity: 0.85, x: "0%", transformOrigin: "left center" } : { rotateY: 90, opacity: 0.85, x: "0%", transformOrigin: "right center" }
-            }
-            transition={{
-              duration: isMobile ? 0.35 : 0.65,
-              ease: "easeInOut",
+    <>
+      <main
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onClick={handleViewportClick}
+        style={{ touchAction: "pan-y" }}
+        className="relative h-screen w-screen overflow-hidden bg-[#F3E8D8] text-[#211B1D] select-none perspective-[1600px]"
+      >
+        {/* ── 3D / Hardware-Accelerated Page Stack ── */}
+        <div className="relative h-full w-full preserve-3d">
+          <AnimatePresence mode="popLayout" custom={direction}>
+            <motion.div
+              key={currentPage}
+              custom={direction}
+              initial={
+                isMobile
+                  ? direction === "next" ? { x: "100%", opacity: 0.9, scale: 0.98, rotateY: 0 } : { x: "-100%", opacity: 0.9, scale: 0.98, rotateY: 0 }
+                  : direction === "next" ? { rotateY: 90, opacity: 0.85, x: "0%", transformOrigin: "left center" } : { rotateY: -90, opacity: 0.85, x: "0%", transformOrigin: "right center" }
+              }
+              animate={
+                isMobile
+                  ? { x: "0%", opacity: 1, scale: 1, rotateY: 0 }
+                  : { rotateY: 0, opacity: 1, x: "0%", scale: 1 }
+              }
+              exit={
+                isMobile
+                  ? direction === "next" ? { x: "-100%", opacity: 0.9, scale: 0.98, rotateY: 0 } : { x: "100%", opacity: 0.9, scale: 0.98, rotateY: 0 }
+                  : direction === "next" ? { rotateY: -90, opacity: 0.85, x: "0%", transformOrigin: "left center" } : { rotateY: 90, opacity: 0.85, x: "0%", transformOrigin: "right center" }
+              }
+              transition={{
+                duration: isMobile ? 0.35 : 0.65,
+                ease: "easeInOut",
+              }}
+              style={{
+                willChange: "transform, opacity",
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+              }}
+              className="absolute inset-0 h-full w-full bg-[#F3E8D8] shadow-2xl overflow-hidden"
+            >
+              {/* Spine Paper Fold Shadow Gradient */}
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-10 sm:w-12 bg-gradient-to-r from-black/20 via-black/5 to-transparent z-40" />
+
+              {/* Active Magazine Page Component (Allows Normal Vertical Scroll) */}
+              <div className="h-full w-full overflow-y-auto overflow-x-hidden">
+                {PAGES[currentPage].component}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* ── Editorial Side Navigation Arrows ── */}
+        {currentPage > 0 && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              prevPage();
             }}
-            style={{
-              willChange: "transform, opacity",
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-            }}
-            className="absolute inset-0 h-full w-full bg-[#F3E8D8] shadow-2xl overflow-hidden"
+            aria-label="Previous Page"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-50 p-2.5 sm:p-3 rounded-full bg-[#6B3045]/10 hover:bg-[#6B3045]/20 text-[#6B3045] transition-all cursor-pointer backdrop-blur-xs hidden sm:flex items-center justify-center group border border-[#6B3045]/20 shadow-md"
           >
-            {/* Spine Paper Fold Shadow Gradient */}
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-10 sm:w-12 bg-gradient-to-r from-black/20 via-black/5 to-transparent z-40" />
+            <span className="text-xs font-mono font-bold group-hover:-translate-x-0.5 transition-transform">
+              ←
+            </span>
+          </button>
+        )}
 
-            {/* Active Magazine Page Component (Allows Normal Vertical Scroll) */}
-            <div className="h-full w-full overflow-y-auto overflow-x-hidden">
-              {PAGES[currentPage].component}
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+        {currentPage < totalPages - 1 && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              nextPage();
+            }}
+            aria-label="Next Page"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-50 p-2.5 sm:p-3 rounded-full bg-[#6B3045]/10 hover:bg-[#6B3045]/20 text-[#6B3045] transition-all cursor-pointer backdrop-blur-xs hidden sm:flex items-center justify-center group border border-[#6B3045]/20 shadow-md"
+          >
+            <span className="text-xs font-mono font-bold group-hover:translate-x-0.5 transition-transform">
+              →
+            </span>
+          </button>
+        )}
 
-      {/* ── Editorial Side Navigation Arrows ── */}
-      {currentPage > 0 && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            prevPage();
-          }}
-          aria-label="Previous Page"
-          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-50 p-2.5 sm:p-3 rounded-full bg-[#6B3045]/10 hover:bg-[#6B3045]/20 text-[#6B3045] transition-all cursor-pointer backdrop-blur-xs hidden sm:flex items-center justify-center group border border-[#6B3045]/20 shadow-md"
-        >
-          <span className="text-xs font-mono font-bold group-hover:-translate-x-0.5 transition-transform">
-            ←
+        {/* ── Floating Editorial Page Indicator Badge ── */}
+        <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-[#F3E8D8]/90 px-4 py-1 rounded-full border border-[#6B3045]/25 shadow-md backdrop-blur-xs">
+          <span className="font-editorial font-bold text-xs sm:text-sm text-[#421D2A] tracking-widest">
+            {PAGES[currentPage].num} / {totalPages < 10 ? `0${totalPages}` : totalPages}
           </span>
-        </button>
-      )}
-
-      {currentPage < totalPages - 1 && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            nextPage();
-          }}
-          aria-label="Next Page"
-          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-50 p-2.5 sm:p-3 rounded-full bg-[#6B3045]/10 hover:bg-[#6B3045]/20 text-[#6B3045] transition-all cursor-pointer backdrop-blur-xs hidden sm:flex items-center justify-center group border border-[#6B3045]/20 shadow-md"
-        >
-          <span className="text-xs font-mono font-bold group-hover:translate-x-0.5 transition-transform">
-            →
-          </span>
-        </button>
-      )}
-
-      {/* ── Floating Editorial Page Indicator Badge ── */}
-      <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-[#F3E8D8]/90 px-4 py-1 rounded-full border border-[#6B3045]/25 shadow-md backdrop-blur-xs">
-        <span className="font-editorial font-bold text-xs sm:text-sm text-[#421D2A] tracking-widest">
-          {PAGES[currentPage].num} / 10
-        </span>
-      </div>
-    </main>
+        </div>
+      </main>
+    </>
   );
 };
