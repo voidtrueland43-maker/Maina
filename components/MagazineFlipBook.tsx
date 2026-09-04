@@ -31,6 +31,7 @@ export const MagazineFlipBook = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState<"next" | "prev">("next");
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const isFlippingRef = useRef(false);
   const touchStartXRef = useRef<number | null>(null);
@@ -40,6 +41,7 @@ export const MagazineFlipBook = () => {
 
   // Detect mobile viewport width dynamically for GPU-optimized mobile transition
   useEffect(() => {
+    setMounted(true);
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 640);
     };
@@ -173,21 +175,21 @@ export const MagazineFlipBook = () => {
             custom={direction}
             initial={
               isMobile
-                ? direction === "next" ? { x: "100%", opacity: 0.9, scale: 0.98 } : { x: "-100%", opacity: 0.9, scale: 0.98 }
-                : direction === "next" ? { rotateY: 90, opacity: 0.85, transformOrigin: "left center" } : { rotateY: -90, opacity: 0.85, transformOrigin: "right center" }
+                ? direction === "next" ? { x: "100%", opacity: 0.9, scale: 0.98, rotateY: 0 } : { x: "-100%", opacity: 0.9, scale: 0.98, rotateY: 0 }
+                : direction === "next" ? { rotateY: 90, opacity: 0.85, x: "0%", transformOrigin: "left center" } : { rotateY: -90, opacity: 0.85, x: "0%", transformOrigin: "right center" }
             }
             animate={
               isMobile
-                ? { x: "0%", opacity: 1, scale: 1 }
-                : { rotateY: 0, opacity: 1 }
+                ? { x: "0%", opacity: 1, scale: 1, rotateY: 0 }
+                : { rotateY: 0, opacity: 1, x: "0%", scale: 1 }
             }
             exit={
               isMobile
-                ? direction === "next" ? { x: "-100%", opacity: 0.9, scale: 0.98 } : { x: "100%", opacity: 0.9, scale: 0.98 }
-                : direction === "next" ? { rotateY: -90, opacity: 0.85, transformOrigin: "left center" } : { rotateY: 90, opacity: 0.85, transformOrigin: "right center" }
+                ? direction === "next" ? { x: "-100%", opacity: 0.9, scale: 0.98, rotateY: 0 } : { x: "100%", opacity: 0.9, scale: 0.98, rotateY: 0 }
+                : direction === "next" ? { rotateY: -90, opacity: 0.85, x: "0%", transformOrigin: "left center" } : { rotateY: 90, opacity: 0.85, x: "0%", transformOrigin: "right center" }
             }
             transition={{
-              duration: isMobile ? 0.38 : 0.75,
+              duration: isMobile ? 0.35 : 0.65,
               ease: "easeInOut",
             }}
             style={{

@@ -53,6 +53,11 @@ body {
   font-family: var(--font-fountain-pen), "Alex Brush", "Great Vibes", cursive;
 }
 
+.font-calligraphy {
+  font-family: var(--font-calligraphy), "Parisienne", "Allura", cursive;
+}
+
+
 .scrapbook-card {
   background-color: #FAFAF5;
   box-shadow: 0 10px 25px -5px rgba(66, 29, 42, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);

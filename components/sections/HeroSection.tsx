@@ -5,15 +5,15 @@ import { motion } from "framer-motion";
 
 export const HeroSection = () => {
   return (
-    <section className="paper-grain relative flex h-screen max-h-screen w-full flex-col justify-between overflow-hidden bg-[#F3E8D8] text-[#211B1D] px-5 py-4 sm:px-10 sm:py-6 md:px-14 md:py-8 select-none">
+    <section className="paper-grain relative flex min-h-full sm:min-h-screen w-full flex-col justify-between overflow-x-hidden bg-[#F3E8D8] text-[#211B1D] px-3 py-4 sm:px-10 sm:py-6 md:px-14 md:py-8 select-none">
       {/* ── Outer Editorial Inset Border ── */}
       <div className="pointer-events-none absolute inset-3.5 sm:inset-5 md:inset-6 border border-[#6B3045]/20" />
 
       {/* ── 1. Top Metadata Header Bar ── */}
       <motion.header
-        initial={{ opacity: 0, y: -10 }}
+        initial={{ opacity: 0, y: -5 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
         className="relative z-10 flex items-center justify-between border-b border-[#6B3045]/30 pb-2 text-[9px] sm:text-xs tracking-[0.25em] uppercase text-[#6B3045] shrink-0"
       >
         <span className="font-semibold">ISSUE 01</span>
@@ -26,9 +26,9 @@ export const HeroSection = () => {
         
         {/* Masthead: MAINA (Scaled down ~10-15%) */}
         <motion.h1
-          initial={{ opacity: 0, y: 12, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
           className="font-serif-title text-[#6B3045] text-5xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] font-extrabold tracking-tight leading-[0.85] uppercase drop-shadow-sm"
         >
           MAINA
@@ -36,9 +36,9 @@ export const HeroSection = () => {
 
         {/* Dedicated Birthday Information Stack */}
         <motion.div
-          initial={{ opacity: 0, y: 8 }}
+          initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.25 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
           className="flex flex-col items-center mt-2.5 sm:mt-4 space-y-1 sm:space-y-1.5"
         >
           {/* THE BIRTHDAY ISSUE */}
@@ -64,9 +64,9 @@ export const HeroSection = () => {
 
         {/* ── 3. Main Cover Portrait (Target ~300-340px width on desktop) ── */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 12 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
           className="w-[210px] sm:w-[270px] md:w-[310px] lg:w-[330px] max-w-full mt-3 sm:mt-5"
         >
           <div className="relative group bg-[#F3E8D8] p-2 sm:p-3 border border-[#6B3045]/30 shadow-xl rounded-sm">
@@ -102,9 +102,9 @@ export const HeroSection = () => {
 
       {/* ── 4. Footer ── */}
       <motion.footer
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.45 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
         className="relative z-10 pt-2 border-t border-[#6B3045]/30 flex flex-row items-center justify-between text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-[#6B3045] shrink-0"
       >
         <span>SPECIAL EDITION</span>

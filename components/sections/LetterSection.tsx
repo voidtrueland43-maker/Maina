@@ -176,11 +176,11 @@ export const LetterSection = () => {
 
                 {/* Authentic Fountain-Pen Handwritten Letter Content */}
                 <div className="font-editorial text-[#421D2A] text-base sm:text-lg lg:text-[1.15rem] leading-[1.65] space-y-3.5 z-10 max-w-[540px] max-h-[390px] sm:max-h-[430px] overflow-y-auto pr-3 select-text">
-                  <p className="font-fountain-pen text-2xl sm:text-3xl lg:text-4xl text-[#6B3045] font-bold leading-tight">
+                  <p className="font-calligraphy text-2xl sm:text-3xl lg:text-4xl text-[#000000] font-normal leading-tight">
                     My dearest Maina,
                   </p>
 
-                  <p className="font-fountain-pen text-xl sm:text-2xl lg:text-3xl text-[#6B3045] font-semibold">
+                  <p className="font-calligraphy text-xl sm:text-2xl lg:text-3xl text-[#000000] font-normal">
                     Happy birthday, my love. ❤️
                   </p>
 
@@ -226,7 +226,7 @@ export const LetterSection = () => {
                     Today, tomorrow, and in all the ordinary days in between.
                   </p>
 
-                  <p className="font-fountain-pen text-xl sm:text-2xl lg:text-3xl text-[#6B3045] font-semibold">
+                  <p className="font-calligraphy text-xl sm:text-2xl lg:text-3xl text-[#000000] font-normal">
                     Happy birthday, my love. ❤️
                   </p>
 
