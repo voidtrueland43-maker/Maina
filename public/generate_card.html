@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Generate Maina Birthday QR Card PNG</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    body {
+      background: #211B1D;
+      color: #F5EFE6;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    #preview-canvas {
+      border: 2px solid #C9A66B;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .btn-download {
+      margin-top: 20px;
+      background: #6B3045;
+      color: #FFFFFF;
+      border: 1px solid #C9A66B;
+      padding: 14px 32px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .btn-download:hover {
+      background: #7A2332;
+    }
+    #hidden-qr {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Maina Birthday Surprise QR Card (PNG Generator)</h1>
+  <p>The card automatically renders below in 4K resolution. Click the button to save the PNG image!</p>
+
+  <canvas id="preview-canvas" width="1000" height="1500"></canvas>
+  
+  <button id="download-btn" class="btn-download">💾 DOWNLOAD QR CARD PNG</button>
+
+  <div id="hidden-qr"></div>
+
+  <script>
+    const TARGET_URL = "https://mainabirthdaywebsiteproject.vercel.app/";
+    const hiddenQr = document.getElementById('hidden-qr');
+    const canvas = document.getElementById('preview-canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Render QR Code to hidden div
+    new QRCode(hiddenQr, {
+      text: TARGET_URL,
+      width: 400,
+      height: 400,
+      colorDark: "#421D2A",
+      colorLight: "#FFFFFF",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    function drawCard() {
+      // 1. Background
+      ctx.fillStyle = "#F5EFE6";
+      ctx.fillRect(0, 0, 1000, 1500);
+
+      // Paper grain noise effect
+      ctx.fillStyle = "rgba(107, 48, 69, 0.03)";
+      for (let i = 0; i < 1000; i += 20) {
+        for (let j = 0; j < 1500; j += 20) {
+          ctx.fillRect(i, j, 2, 2);
+        }
+      }
+
+      // 2. Borders
+      ctx.strokeStyle = "rgba(107, 48, 69, 0.4)";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(30, 30, 940, 1440);
+
+      ctx.strokeStyle = "rgba(201, 166, 107, 0.6)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(42, 42, 916, 1416);
+
+      // 3. Header Text
+      ctx.fillStyle = "#6B3045";
+      ctx.font = "bold 38px serif";
+      ctx.textAlign = "center";
+      ctx.fillText("SPECIAL BIRTHDAY DEDICATION", 500, 130);
+
+      ctx.fillStyle = "#421D2A";
+      ctx.font = "bold 64px serif";
+      ctx.fillText("HAPPY 22ND BIRTHDAY", 500, 210);
+
+      ctx.fillStyle = "#7A2332";
+      ctx.font = "italic bold 85px Georgia, serif";
+      ctx.fillText("Maina ♡", 500, 300);
+
+      // Divider line
+      ctx.strokeStyle = "#C9A66B";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(350, 340);
+      ctx.lineTo(650, 340);
+      ctx.stroke();
+
+      // Subtitle
+      ctx.fillStyle = "#421D2A";
+      ctx.font = "italic 32px Georgia, serif";
+      ctx.fillText("A secret digital surprise is waiting for you...", 500, 400);
+
+      // 4. White QR Container Box with Gold Frame
+      ctx.fillStyle = "#FFFFFF";
+      ctx.shadowColor = "rgba(66, 29, 42, 0.15)";
+      ctx.shadowBlur = 30;
+      ctx.shadowOffsetY = 15;
+      ctx.fillRect(250, 470, 500, 560);
+      ctx.shadowColor = "transparent";
+
+      ctx.strokeStyle = "#C9A66B";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(250, 470, 500, 560);
+
+      // Inner text above QR
+      ctx.fillStyle = "#6B3045";
+      ctx.font = "bold 26px sans-serif";
+      ctx.fillText("SCAN TO OPEN YOUR SURPRISE ♡", 500, 520);
+
+      // Draw QR Code Image onto Canvas
+      const qrImg = hiddenQr.querySelector('img') || hiddenQr.querySelector('canvas');
+      if (qrImg) {
+        ctx.drawImage(qrImg, 300, 550, 400, 400);
+      }
+
+      // 5. Couple Photo Box Below
+      const coupleImg = new Image();
+      coupleImg.src = "/photos/couple_may5.jpg";
+      coupleImg.onload = () => {
+        // Draw lower photo frame
+        ctx.save();
+        ctx.fillStyle = "#FFFFFF";
+        ctx.shadowColor = "rgba(0,0,0,0.15)";
+        ctx.shadowBlur = 20;
+        ctx.fillRect(310, 1080, 380, 260);
+
+        ctx.drawImage(coupleImg, 320, 1090, 360, 240);
+        ctx.restore();
+
+        // Footer Caption
+        ctx.fillStyle = "#6B3045";
+        ctx.font = "italic bold 32px Georgia, serif";
+        ctx.fillText("04 September • With All My Love ♡", 500, 1390);
+
+        ctx.fillStyle = "#C9A66B";
+        ctx.font = "bold 22px sans-serif";
+        ctx.fillText("https://mainabirthdaywebsiteproject.vercel.app/", 500, 1430);
+      };
+    }
+
+    // Trigger render when QR code finishes generating
+    setTimeout(drawCard, 800);
+
+    // Download Button Handler
+    document.getElementById('download-btn').addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'Maina_Birthday_Surprise_QR_Card.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>A Secret Surprise for Maina ♡</title>
+  
+  <!-- Romantic Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap" rel="stylesheet" />
+
+  <!-- QRCode.js CDN for reliable client-side QR generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --bg-ivory: #F5EFE6;
+      --bg-card: #FAFAF5;
+      --color-burgundy: #6B3045;
+      --color-deep-burgundy: #421D2A;
+      --color-wine: #7A2332;
+      --color-gold: #C9A66B;
+      --color-gold-light: #E8D3A7;
+      --color-text-dark: #211B1D;
+      --color-rose: #D4A5A5;
+      --font-serif: 'Playfair Display', serif;
+      --font-editorial: 'Cormorant Garamond', serif;
+      --font-sans: 'Outfit', sans-serif;
+      --font-handwriting: 'Alex Brush', cursive;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-ivory);
+      color: var(--color-text-dark);
+      font-family: var(--font-sans);
+      position: relative;
+    }
+
+    /* Paper Texture Overlay */
+    .paper-texture {
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(107, 48, 69, 0.04) 1px, transparent 0);
+      background-size: 16px 16px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Sparkle Dust Canvas */
+    #particle-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Outer Border Frame */
+    .inset-frame {
+      position: fixed;
+      inset: 10px;
+      border: 1px solid rgba(107, 48, 69, 0.25);
+      pointer-events: none;
+      z-index: 3;
+      border-radius: 4px;
+    }
+    .inset-frame::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1px solid rgba(201, 166, 107, 0.3);
+      border-radius: 2px;
+    }
+
+    /* Sound Control Button */
+    .sound-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 50;
+      background: rgba(250, 250, 245, 0.9);
+      border: 1px solid rgba(107, 48, 69, 0.3);
+      color: var(--color-burgundy);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+
+    /* Screen Transitions */
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 10;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s;
+      transform: scale(0.98);
+    }
+    .screen.active {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+
+    /* ────────────────────────────────────────────────────────── */
+    /* PHASE 1: INTRO SCREEN                                     */
+    /* ────────────────────────────────────────────────────────── */
+    #intro-screen {
+      text-align: center;
+    }
+
+    .vintage-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(107, 48, 69, 0.3);
+      border-radius: 16px;
+      padding: 32px 24px;
+      max-width: 340px;
+      width: 90%;
+      box-shadow: 0 12px 35px rgba(66, 29, 42, 0.1);
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .vintage-card::before {
+      content: '✦';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-ivory);
+      padding: 0 8px;
+      color: var(--color-gold);
+      font-size: 1.1rem;
+    }
+
+    .intro-title {
+      font-family: var(--font-handwriting);
+      font-size: 2.8rem;
+      color: var(--color-burgundy);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .intro-subtitle {
+      font-family: var(--font-editorial);
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--color-deep-burgundy);
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .intro-divider {
+      width: 60px;
+      height: 1px;
+      background: var(--color-gold);
+      margin: 0 auto;
+    }
+
+    .btn-romantic {
+      background: linear-gradient(135deg, var(--color-burgundy), var(--color-wine));
+      color: #ffffff;
+      border: 1px solid var(--color-gold);
+      padding: 14px 34px;
+      border-radius: 30px;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(122, 35, 50, 0.25);
+      transition: all 0.3s ease;
+    }
+    .btn-romantic:active {
+      transform: scale(0.95);
+    }
+
+    /* ────────────────────────────────────────────────────────── */
+    /* PHASE 2: 4-PIECE JIGSAW PUZZLE SCREEN (2x2 GRID)           */
+    /* ────────────────────────────────────────────────────────── */
+    #puzzle-screen {
+      justify-content: center;
+    }
+
+    .puzzle-header {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .puzzle-title {
+      font-family: var(--font-serif);
+      color: var(--color-burgundy);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .puzzle-subtitle {
+      font-family: var(--font-editorial);
+      font-style: italic;
+      color: var(--color-deep-burgundy);
+      font-size: 1.05rem;
+      margin-top: 2px;
+    }
+
+    /* 2x2 Board Frame */
+    .puzzle-board-wrapper {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 12px auto;
+      touch-action: none;
+    }
+
+    #puzzle-grid {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      background: var(--bg-card);
+      border: 3px solid rgba(107, 48, 69, 0.35);
+      border-radius: 12px;
+      box-shadow: 0 12px 35px rgba(66, 29, 42, 0.15);
+      overflow: hidden;
+    }
+
+    /* Large 2x2 Jigsaw Piece (150px x 150px) */
+    .jigsaw-piece {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      cursor: pointer;
+      touch-action: none;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: inset 0 0 0 1px rgba(107, 48, 69, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      will-change: transform, left, top;
+      z-index: 10;
+    }
+    .jigsaw-piece.selected {
+      z-index: 50 !important;
+      scale: 1.05;
+      box-shadow: 0 0 0 3px var(--color-gold), 0 10px 20px rgba(0,0,0,0.25);
+    }
+    .jigsaw-piece.locked {
+      cursor: default;
+      box-shadow: none;
+      border: none;
+      z-index: 5;
+    }
+
+    .puzzle-hint {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-burgundy);
+      margin-top: 10px;
+      text-align: center;
+      opacity: 0.9;
+    }
+
+    /* ────────────────────────────────────────────────────────── */
+    /* PHASE 3: COMPLETION & QR CODE ENVELOPE SCREEN              */
+    /* ────────────────────────────────────────────────────────── */
+    #reveal-screen {
+      text-align: center;
+    }
+
+    .completion-status {
+      font-family: var(--font-handwriting);
+      font-size: 2.8rem;
+      color: var(--color-burgundy);
+      margin-bottom: 4px;
+    }
+    .completion-subtext {
+      font-family: var(--font-editorial);
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--color-deep-burgundy);
+      margin-bottom: 24px;
+    }
+
+    /* Animated 3D Envelope */
+    .envelope-wrapper {
+      position: relative;
+      width: 280px;
+      height: 190px;
+      margin: 0 auto 20px auto;
+    }
+    .envelope-box {
+      width: 100%;
+      height: 100%;
+      background: #EEDCC6;
+      border: 2px solid rgba(107, 48, 69, 0.3);
+      border-radius: 6px;
+      position: relative;
+      box-shadow: 0 15px 35px rgba(66, 29, 42, 0.2);
+    }
+
+    .wax-seal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      background: var(--color-wine);
+      border: 2px solid var(--color-deep-burgundy);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+      z-index: 30;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+    .wax-seal span {
+      font-family: var(--font-serif);
+      color: var(--color-gold);
+      font-weight: 800;
+      font-size: 1.25rem;
+    }
+
+    /* High-Contrast Large QR Card inside Envelope */
+    .qr-card {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%) translateY(0);
+      width: 245px;
+      background: var(--bg-card);
+      border: 2px solid var(--color-gold);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+      z-index: 20;
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .envelope-wrapper.open .qr-card {
+      transform: translateX(-50%) translateY(-145px);
+      z-index: 40;
+    }
+    .envelope-wrapper.open .wax-seal {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+    }
+
+    #qrcode-box {
+      width: 170px;
+      height: 170px;
+      background: #ffffff;
+      padding: 10px;
+      border: 1px solid rgba(107, 48, 69, 0.25);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #qrcode-box img, #qrcode-box canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 180px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.6s;
+    }
+    .envelope-wrapper.open ~ .action-row {
+      opacity: 1;
+    }
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--color-burgundy);
+      border: 1px solid var(--color-burgundy);
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+    }
+    .btn-secondary:active {
+      transform: scale(0.95);
+      background: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Paper Texture -->
+  <div class="paper-texture"></div>
+
+  <!-- Sparkle Particle Canvas -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Border Frame -->
+  <div class="inset-frame"></div>
+
+  <!-- Sound Toggle -->
+  <button id="sound-btn" class="sound-toggle" aria-label="Toggle Sound">
+    <span id="sound-icon">🔇</span>
+    <span id="sound-label">Sound OFF</span>
+  </button>
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- PHASE 1: VINTAGE INTRO SCREEN                             -->
+  <!-- ────────────────────────────────────────────────────────── -->
+  <section id="intro-screen" class="screen active">
+    <div class="vintage-card">
+      <h1 class="intro-title">A little surprise...</h1>
+      <p class="intro-subtitle">Put the pieces together to find it ♡</p>
+      <div class="intro-divider"></div>
+    </div>
+
+    <button id="start-btn" class="btn-romantic">
+      START PUZZLE ♡
+    </button>
+  </section>
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- PHASE 2: 4-PIECE JIGSAW PUZZLE SCREEN                      -->
+  <!-- ────────────────────────────────────────────────────────── -->
+  <section id="puzzle-screen" class="screen">
+    <div class="puzzle-header">
+      <h2 class="puzzle-title">THE SECRET PIECES</h2>
+      <p class="puzzle-subtitle">Tap or drag two pieces to swap them ♡</p>
+    </div>
+
+    <!-- 2x2 Jigsaw Board Container (300px x 300px) -->
+    <div class="puzzle-board-wrapper">
+      <div id="puzzle-grid">
+        <!-- 4 Large 2x2 Jigsaw Pieces generated dynamically -->
+      </div>
+    </div>
+
+    <div class="puzzle-hint">✦ TAP OR DRAG PIECES TO COMPLETE THE PICTURE ✦</div>
+  </section>
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- PHASE 3: COMPLETION & QR REVEAL ENVELOPE SCREEN           -->
+  <!-- ────────────────────────────────────────────────────────── -->
+  <section id="reveal-screen" class="screen">
+    <h2 class="completion-status">You found it ♡</h2>
+    <p class="completion-subtext">But there's one more little surprise…</p>
+
+    <!-- 3D Envelope Assembly -->
+    <div id="envelope-box-wrap" class="envelope-wrapper">
+      <div class="envelope-box">
+        <svg width="100%" height="100%" viewBox="0 0 280 190" preserveAspectRatio="none" style="position: absolute; inset:0; pointer-events:none;">
+          <polygon points="0,0 140,95 280,0" fill="#E8D3A7" stroke="rgba(107, 48, 69, 0.25)" stroke-width="1.5" />
+          <polygon points="0,190 140,95 280,190" fill="#E2CBA0" stroke="rgba(107, 48, 69, 0.2)" stroke-width="1.5" />
+        </svg>
+
+        <div class="wax-seal">
+          <span>M</span>
+        </div>
+
+        <div id="qr-card-element" class="qr-card">
+          <div style="font-family: var(--font-serif); font-size: 0.85rem; font-weight: 800; color: var(--color-burgundy); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">
+            SCAN THIS ♡
+          </div>
+          
+          <div id="qrcode-box"></div>
+
+          <div style="font-family: var(--font-editorial); font-size: 0.85rem; font-style: italic; color: var(--color-deep-burgundy); margin-top: 8px;">
+            Use your camera to open your surprise ♡
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button id="copy-btn" class="btn-secondary">COPY LINK</button>
+      <button id="replay-btn" class="btn-secondary">REVEAL AGAIN</button>
+    </div>
+  </section>
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- JAVASCRIPT GAME LOGIC                                      -->
+  <!-- ────────────────────────────────────────────────────────── -->
+  <script>
+    /* =================================================================== */
+    /* 1. EXACT TARGET SURPRISE URL FOR QR CODE                            */
+    /* =================================================================== */
+    const SURPRISE_URL = "https://mainabirthdaywebsiteproject.vercel.app/";
+
+    // Photo used for 4-piece jigsaw
+    const PUZZLE_IMAGE = "/photos/couple_may5.jpg";
+
+    /* =================================================================== */
+    /* 2. AUDIO CHIME ENGINE                                              */
+    /* =================================================================== */
+    let soundEnabled = false;
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    function playSnapSound() {
+      if (!soundEnabled || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.12);
+      } catch (e) {}
+    }
+
+    function playWinChime() {
+      if (!soundEnabled || !audioCtx) return;
+      try {
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.12);
+          gain.gain.setValueAtTime(0.2, audioCtx.currentTime + idx * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + idx * 0.12 + 0.4);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(audioCtx.currentTime + idx * 0.12);
+          osc.stop(audioCtx.currentTime + idx * 0.12 + 0.4);
+        });
+      } catch (e) {}
+    }
+
+    const soundBtn = document.getElementById('sound-btn');
+    soundBtn.addEventListener('click', () => {
+      initAudio();
+      soundEnabled = !soundEnabled;
+      document.getElementById('sound-icon').textContent = soundEnabled ? '🔔' : '🔇';
+      document.getElementById('sound-label').textContent = soundEnabled ? 'Sound ON' : 'Sound OFF';
+    });
+
+    /* =================================================================== */
+    /* 3. SPARKLE DUST PARTICLES                                           */
+    /* =================================================================== */
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.8;
+        this.speedY = -(Math.random() * 0.4 + 0.1);
+        this.speedX = Math.sin(Math.random() * Math.PI) * 0.3;
+        this.alpha = Math.random() * 0.5 + 0.2;
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        if (this.y < 0) this.reset();
+      }
+      draw() {
+        ctx.fillStyle = `rgba(201, 166, 107, ${this.alpha})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 24; i++) particles.push(new Particle());
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    /* =================================================================== */
+    /* 4. RELIABLE 4-PIECE (2x2) PUZZLE ENGINE                             */
+    /* =================================================================== */
+    const SIZE = 300; // 300px total board
+    const PIECE = 150; // 150px per piece
+    const puzzleGrid = document.getElementById('puzzle-grid');
+
+    // 4 Target positions
+    const targets = [
+      { id: 0, x: 0, y: 0 },
+      { id: 1, x: 150, y: 0 },
+      { id: 2, x: 0, y: 150 },
+      { id: 3, x: 150, y: 150 }
+    ];
+
+    let pieces = [];
+    let selectedPiece = null;
+
+    function initPuzzle() {
+      puzzleGrid.innerHTML = '';
+      pieces = [];
+      selectedPiece = null;
+
+      // Create initial scrambled order guaranteed not to be already solved
+      let scrambled = [0, 1, 2, 3];
+      do {
+        scrambled.sort(() => Math.random() - 0.5);
+      } while (scrambled[0] === 0 && scrambled[1] === 1 && scrambled[2] === 2 && scrambled[3] === 3);
+
+      scrambled.forEach((targetId, currentSlot) => {
+        const targetPos = targets[targetId];
+        const currentPos = targets[currentSlot];
+
+        const el = document.createElement('div');
+        el.className = 'jigsaw-piece';
+        el.dataset.targetId = targetId;
+        el.dataset.currentSlot = currentSlot;
+
+        // Image Slice
+        el.style.backgroundImage = `url("${PUZZLE_IMAGE}")`;
+        el.style.backgroundSize = `${SIZE}px ${SIZE}px`;
+        el.style.backgroundPosition = `-${targetPos.x}px -${targetPos.y}px`;
+
+        el.style.left = `${currentPos.x}px`;
+        el.style.top = `${currentPos.y}px`;
+
+        puzzleGrid.appendChild(el);
+        pieces.push(el);
+
+        setupPieceEvents(el);
+      });
+    }
+
+    function swapPieces(pieceA, pieceB) {
+      playSnapSound();
+
+      const slotA = parseInt(pieceA.dataset.currentSlot);
+      const slotB = parseInt(pieceB.dataset.currentSlot);
+
+      const posA = targets[slotA];
+      const posB = targets[slotB];
+
+      pieceA.dataset.currentSlot = slotB;
+      pieceA.style.left = `${posB.x}px`;
+      pieceA.style.top = `${posB.y}px`;
+
+      pieceB.dataset.currentSlot = slotA;
+      pieceB.style.left = `${posA.x}px`;
+      pieceB.style.top = `${posA.y}px`;
+
+      // Check win condition
+      checkWin();
+    }
+
+    function checkWin() {
+      let isSolved = true;
+      pieces.forEach(p => {
+        const targetId = parseInt(p.dataset.targetId);
+        const currentSlot = parseInt(p.dataset.currentSlot);
+        if (targetId !== currentSlot) isSolved = false;
+      });
+
+      if (isSolved) {
+        pieces.forEach(p => p.classList.add('locked'));
+        setTimeout(triggerCompletion, 400);
+      }
+    }
+
+    /* Dual Tap & Drag Event Engine */
+    function setupPieceEvents(el) {
+      let isDragging = false;
+      let startX, startY, origLeft, origTop;
+
+      function onPointerDown(e) {
+        if (el.classList.contains('locked')) return;
+        initAudio();
+
+        isDragging = true;
+        startX = e.clientX || (e.touches && e.touches[0].clientX);
+        startY = e.clientY || (e.touches && e.touches[0].clientY);
+
+        origLeft = parseFloat(el.style.left);
+        origTop = parseFloat(el.style.top);
+
+        // Tap selection logic
+        if (!selectedPiece) {
+          selectedPiece = el;
+          el.classList.add('selected');
+        } else if (selectedPiece === el) {
+          selectedPiece.classList.remove('selected');
+          selectedPiece = null;
+        } else {
+          const first = selectedPiece;
+          first.classList.remove('selected');
+          selectedPiece = null;
+          swapPieces(first, el);
+          return;
+        }
+
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+        window.addEventListener('touchmove', onPointerMove, { passive: false });
+        window.addEventListener('touchend', onPointerUp);
+      }
+
+      function onPointerMove(e) {
+        if (!isDragging) return;
+        if (e.cancelable) e.preventDefault();
+
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+
+        const deltaX = clientX - startX;
+        const deltaY = clientY - startY;
+
+        el.style.left = `${origLeft + deltaX}px`;
+        el.style.top = `${origTop + deltaY}px`;
+      }
+
+      function onPointerUp(e) {
+        if (!isDragging) return;
+        isDragging = false;
+
+        window.removeEventListener('pointermove', onPointerMove);
+        window.removeEventListener('pointerup', onPointerUp);
+        window.removeEventListener('touchmove', onPointerMove);
+        window.removeEventListener('touchend', onPointerUp);
+
+        const currentX = parseFloat(el.style.left);
+        const currentY = parseFloat(el.style.top);
+
+        // Check if dragged onto another piece
+        let swapped = false;
+        for (let other of pieces) {
+          if (other === el) continue;
+
+          const otherSlot = parseInt(other.dataset.currentSlot);
+          const targetPos = targets[otherSlot];
+
+          const dist = Math.hypot(currentX - targetPos.x, currentY - targetPos.y);
+          if (dist < 60) {
+            if (selectedPiece) {
+              selectedPiece.classList.remove('selected');
+              selectedPiece = null;
+            }
+            swapPieces(el, other);
+            swapped = true;
+            break;
+          }
+        }
+
+        if (!swapped) {
+          const currentSlot = parseInt(el.dataset.currentSlot);
+          const origPos = targets[currentSlot];
+          el.style.left = `${origPos.x}px`;
+          el.style.top = `${origPos.y}px`;
+        }
+      }
+
+      el.addEventListener('pointerdown', onPointerDown);
+    }
+
+    /* =================================================================== */
+    /* 5. SCREEN TRANSITIONS & REVEAL ENGINE                               */
+    /* =================================================================== */
+    const introScreen = document.getElementById('intro-screen');
+    const puzzleScreen = document.getElementById('puzzle-screen');
+    const revealScreen = document.getElementById('reveal-screen');
+    const startBtn = document.getElementById('start-btn');
+    const envelopeWrap = document.getElementById('envelope-box-wrap');
+    const qrcodeBox = document.getElementById('qrcode-box');
+
+    startBtn.addEventListener('click', () => {
+      introScreen.classList.remove('active');
+      setTimeout(() => {
+        puzzleScreen.classList.add('active');
+        initPuzzle();
+      }, 400);
+    });
+
+    function triggerCompletion() {
+      playWinChime();
+      puzzleScreen.classList.remove('active');
+
+      setTimeout(() => {
+        revealScreen.classList.add('active');
+        generateQRCode();
+
+        setTimeout(() => {
+          envelopeWrap.classList.add('open');
+        }, 800);
+      }, 500);
+    }
+
+    function generateQRCode() {
+      qrcodeBox.innerHTML = '';
+      new QRCode(qrcodeBox, {
+        text: SURPRISE_URL,
+        width: 150,
+        height: 150,
+        colorDark: "#421D2A",
+        colorLight: "#FFFFFF",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      navigator.clipboard.writeText(SURPRISE_URL).then(() => {
+        alert('Website Link copied to clipboard! ♡');
+      }).catch(() => {
+        alert(`Website Link: ${SURPRISE_URL}`);
+      });
+    });
+
+    document.getElementById('replay-btn').addEventListener('click', () => {
+      envelopeWrap.classList.remove('open');
+      revealScreen.classList.remove('active');
+      setTimeout(() => {
+        introScreen.classList.add('active');
+      }, 400);
+    });
+  </script>
+</body>
+</html>

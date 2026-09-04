@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+:root {
+  --paper-bg: #F3E8D8;
+  --burgundy: #6B3045;
+  --deep-wine: #421D2A;
+  --ink: #211B1D;
+  --muted-rose: #B9828F;
+  --champagne: #C9A66B;
+}
+
+@theme inline {
+  --color-paper: var(--paper-bg);
+  --color-burgundy: var(--burgundy);
+  --color-deep-wine: var(--deep-wine);
+  --color-ink: var(--ink);
+  --color-muted-rose: var(--muted-rose);
+  --color-champagne: var(--champagne);
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-cormorant: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-jakarta), sans-serif;
+}
+
+body {
+  background-color: var(--paper-bg);
+  color: var(--ink);
+  font-family: var(--font-jakarta), sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.font-serif-title {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+.font-editorial {
+  font-family: var(--font-cormorant), Georgia, serif;
+}
+
+.font-sans-clean {
+  font-family: var(--font-jakarta), sans-serif;
+}
+
+.font-handwriting {
+  font-family: var(--font-handwriting), "Caveat", cursive;
+}
+
+.font-typewriter {
+  font-family: var(--font-typewriter), "Courier New", Courier, monospace;
+}
+
+.font-fountain-pen {
+  font-family: var(--font-fountain-pen), "Alex Brush", "Great Vibes", cursive;
+}
+
+.scrapbook-card {
+  background-color: #FAFAF5;
+  box-shadow: 0 10px 25px -5px rgba(66, 29, 42, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+.polaroid-frame {
+  background-color: #FFFFFF;
+  padding: 10px 10px 32px 10px;
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.12), 0 4px 8px -2px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Continuous 35mm Movie Reel Ticker Animation ────── */
+@keyframes filmReel {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-film-reel {
+  display: flex;
+  width: max-content;
+  animation: filmReel 40s linear infinite;
+  will-change: transform;
+}
+
+.animate-film-reel:hover {
+  animation-play-state: paused;
+}
+
+.paper-grain {
+  position: relative;
+  background-color: #F3E8D8;
+}
+
+.paper-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Hide Spline watermark */
+a[href*="spline.design"] {
+  display: none !important;
+}
+
+/* Position floating Next dev indicator away from magazine content */
+nextjs-portal,
+[data-nextjs-toast],
+[data-nextjs-toast-wrapper],
+div[class*="next-dev-indicator"] {
+  bottom: 8px !important;
+  left: 8px !important;
+  z-index: 99999 !important;
+}
+
+/* ── Toggle Component ───────────────────────────────── */
+.toggle-container {
+  position: relative;
+  width: 80px;
+  height: 44px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+
+.toggle-base {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #d1d5db;
+  transition: background 0.2s ease;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.toggle-base.on {
+  background: #22c55e;
+}
+
+.toggle-base-inside {
+  position: absolute;
+  inset: 3px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.15);
+}
+
+.toggle-handle-wrapper {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.toggle-handle-wrapper.on {
+  transform: translateX(36px);
+}
+
+.toggle-handle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.toggle-handle-knob {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d1d5db;
+  transition: background 0.3s;
+}
+
+.toggle-handle-wrapper.on .toggle-handle-knob {
+  background: #22c55e;
+}
+
+.toggle-handle-bar-wrapper {
+  width: 16px;
+  height: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-handle-bar {
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: #d1d5db;
+  transition: background 0.3s;
+}
+
+.toggle-handle-wrapper.on .toggle-handle-bar {
+  background: #22c55e;
+}
